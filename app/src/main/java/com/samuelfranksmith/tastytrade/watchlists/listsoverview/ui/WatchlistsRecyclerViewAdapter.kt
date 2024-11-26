@@ -1,4 +1,4 @@
-package com.samuelfranksmith.tastytrade.watchlists.listsoverview
+package com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -9,6 +9,7 @@ import com.samuelfranksmith.tastytrade.watchlists.auth.data.AuthRepository
 import com.samuelfranksmith.tastytrade.watchlists.auth.ui.AuthenticationAction.TappedLogIn
 import com.samuelfranksmith.tastytrade.watchlists.core.ApiResult
 import com.samuelfranksmith.tastytrade.watchlists.core.UserManager
+import com.samuelfranksmith.tastytrade.watchlists.core.ViewModelActions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -24,18 +25,19 @@ sealed class AuthenticationState {
 }
 // endregion
 
-class AuthViewModel() : ViewModel() {
+class AuthViewModel() : ViewModel(), ViewModelActions<AuthenticationAction> {
 
     // region Public
     var authenticationState = MutableLiveData<AuthenticationState>()
 
+    // region ViewModelActions implementation
     @UiThread
-    fun perform(action: AuthenticationAction) {
+    override fun perform(action: AuthenticationAction) {
         when (action) {
             is TappedLogIn -> authenticate(action.username, action.password)
         }
     }
-
+    // endregion
     // endregion
     // region Private
 
@@ -69,7 +71,6 @@ class AuthViewModel() : ViewModel() {
                         authenticationState.postValue(AuthenticationState.AuthSucceeded)
                     }
                 }
-
             }
             // Ideally, I would like to enumerate the actual exceptions we may encounter and handle each accordingly.
             catch (e: Exception) {

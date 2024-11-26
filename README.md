@@ -10,8 +10,8 @@
 - Logging! So many times during this task I wish I could have logged general events or edge cases to some system for investigation later.
 - Figure out why my Ripple didn't work on my button drawables
 - It is absolutely *hideous* at the moment, and I'd like a few extra days just to make it look... half way decent.
-- The AuthRepo does too much deciding if a network response was "good". For a real app, this would need to be extracted to a singular place outside all of the repositories.
 - While I think the navigation graph does greatly simplify and illustrate navigation paths within an app, and I would certainly use it again, this was my first time ever using it. Like Retrofit 2, I spent precious time learning about it.
+- Putting logout on the Fragments was honestly short-sighted, and this should be extracted to a more generic appbar.
 
 ### TODO
 - Cleanup remaining TODOs

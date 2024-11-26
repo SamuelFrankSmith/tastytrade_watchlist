@@ -10,19 +10,32 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentAuthBinding
 import com.samuelfranksmith.tastytrade.watchlists.R
+import com.samuelfranksmith.tastytrade.watchlists.core.FragmentVMStates
 import com.samuelfranksmith.tastytrade.watchlists.util.invisible
 import com.samuelfranksmith.tastytrade.watchlists.util.visible
 
-class AuthFragment : Fragment() {
+class AuthFragment : Fragment(), FragmentVMStates<AuthenticationState> {
 
-    private var _binding: FragmentAuthBinding? = null
-    private val binding
-        get() = _binding ?: run {
-            throw NullPointerException("View binding was unexpectedly null")
+    // region Public
+    // region FragmentVMStates implementation
+
+    override fun handle(state: AuthenticationState) {
+        when (state) {
+            AuthenticationState.Loading -> {
+                binding.authActivityIndicator.visible()
+            }
+            AuthenticationState.AuthSucceeded -> {
+                userSuccessfullyLoggedIn()
+            }
+            is AuthenticationState.AuthFailed -> {
+                binding.authErrorLabel.text = state.message
+                binding.authActivityIndicator.invisible()
+            }
         }
+    }
 
-    private val authViewModel: AuthViewModel by viewModels()
-
+    // endregion
+    // region Fragment Overrides
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,18 +48,7 @@ class AuthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         authViewModel.authenticationState.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                AuthenticationState.Loading -> {
-                    binding.authActivityIndicator.visible()
-                }
-                AuthenticationState.AuthSucceeded -> {
-                    userSuccessfullyLoggedIn()
-                }
-                is AuthenticationState.AuthFailed -> {
-                    binding.authErrorLabel.text = result.message
-                    binding.authActivityIndicator.invisible()
-                }
-            }
+            handle(result)
         })
 
         binding.authLogInButton.setOnClickListener {
@@ -61,6 +63,18 @@ class AuthFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    // endregion
+    // endregion
+
+    // region Private
+
+    private var _binding: FragmentAuthBinding? = null
+    private val binding
+        get() = _binding ?: run {
+            throw NullPointerException("View binding was unexpectedly null")
+        }
+
+    private val authViewModel: AuthViewModel by viewModels()
 
     private fun userSuccessfullyLoggedIn() {
         binding.authActivityIndicator.invisible()
@@ -69,4 +83,6 @@ class AuthFragment : Fragment() {
 
         findNavController().navigate(R.id.action_AuthFragment_Success_to_WatchlistsFragment)
     }
+
+    // endregion
 }

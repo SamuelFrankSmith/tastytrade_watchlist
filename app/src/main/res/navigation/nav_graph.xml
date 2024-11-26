@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/WatchlistsFragment"
-        android:name="com.samuelfranksmith.tastytrade.watchlists.listsoverview.WatchlistsFragment"
+        android:name="com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui.WatchlistsFragment"
         android:label="@string/watchlists_overview_fragment_label"
         tools:layout="@layout/fragment_watchlists">
 

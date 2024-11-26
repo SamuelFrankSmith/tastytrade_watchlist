@@ -1,16 +1,22 @@
 package com.samuelfranksmith.tastytrade.watchlists.auth.data
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.samuelfranksmith.tastytrade.watchlists.auth.data.models.AuthInput
 import com.samuelfranksmith.tastytrade.watchlists.auth.data.models.AuthResponseModel
 import com.samuelfranksmith.tastytrade.watchlists.core.ApiResult
 import com.samuelfranksmith.tastytrade.watchlists.core.NetworkManager
-import com.samuelfranksmith.tastytrade.watchlists.core.TTError
+import com.samuelfranksmith.tastytrade.watchlists.util.toApiResultError
 import okio.IOException
 
 class AuthRepository {
 
+    /**
+     * This will authenticate the provided user against the TT service.
+     *
+     * At the moment, this does not utilize the 'remember me' field.
+     *
+     * @param username Username to authenticate
+     * @param password Password to authenticate
+     */
    fun postAuthenticationCredentials(
         username: String,
         password: String,
@@ -30,12 +36,7 @@ class AuthRepository {
            response.body()?.let {
                result = ApiResult.Success<AuthResponseModel>(it)
            } ?: response.errorBody()?.let { errorBody ->
-               val type = object : TypeToken<TTError>() {}.type
-               var errorResponse: TTError? = Gson().fromJson(errorBody.charStream(), type)
-               result = ApiResult.Error(
-                   code = errorResponse?.error?.code,
-                   message = errorResponse?.error?.message,
-               )
+               result = errorBody.toApiResultError()
            } ?: run {
                result = ApiResult.Error()
            }
@@ -44,5 +45,27 @@ class AuthRepository {
        }
 
     return result
+    }
+
+    /**
+     * This effectively "logs" the user out of the system by requesting deletion
+     * of the session token. This also invalidates the 'remember me' token.
+     */
+    fun deleteAuthentication(): ApiResult<Any>  {
+        lateinit var result: ApiResult<Any>
+        val call = NetworkManager.client.logout()
+
+        try {
+            val response = call.execute()
+            if (response.code() == 204) {
+                result = ApiResult.Success<Any>(Any())
+            } else {
+                result = ApiResult.Error()
+            }
+        } catch (ioe: IOException) {
+            result = ApiResult.Error(message = ioe.message.toString())
+        }
+
+        return result
     }
 }
