@@ -12,4 +12,7 @@
     <!-- Watchlists Overview -->
     <string name="watchlists_overview_fragment_label">Your Watchlists</string>
 
+    <!-- Menu entries -->
+    <string name="menu_action_logout">Logout</string>
+
 </resources>

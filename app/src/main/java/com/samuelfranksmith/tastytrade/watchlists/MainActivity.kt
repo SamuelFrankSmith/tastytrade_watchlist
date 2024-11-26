@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
+        appBarConfiguration = AppBarConfiguration.Builder(R.id.WatchlistsFragment).build()
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // TODO: if session is still valid, take user to their watchlists

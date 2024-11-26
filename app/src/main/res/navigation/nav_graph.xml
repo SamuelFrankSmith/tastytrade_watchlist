@@ -14,8 +14,10 @@
         tools:layout="@layout/fragment_auth">
 
         <action
-            android:id="@+id/action_AuthFragment_Success"
-            app:destination="@id/WatchlistsFragment" />
+            android:id="@+id/action_AuthFragment_Success_to_WatchlistsFragment"
+            app:destination="@id/WatchlistsFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/WatchlistsFragment"

@@ -67,6 +67,6 @@ class AuthFragment : Fragment() {
         binding.authInputPassword.setText("")
         binding.authInputUsername.setText("")
 
-        findNavController().navigate(R.id.action_AuthFragment_Success)
+        findNavController().navigate(R.id.action_AuthFragment_Success_to_WatchlistsFragment)
     }
 }

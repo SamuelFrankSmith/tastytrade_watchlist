@@ -21,5 +21,4 @@
 ### Tuesday Morning To Do
 - Remove the up/back arrow from 'Your Watchlists'
 - Add logout functionality
-- Add loading indicator to auth
 - 
