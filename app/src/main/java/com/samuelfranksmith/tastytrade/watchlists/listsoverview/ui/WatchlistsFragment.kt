@@ -88,6 +88,12 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
         watchlistsViewModel.watchlistsState.observe(viewLifecycleOwner, Observer { state ->
             handle(state)
         })
+
+        binding.watchlistsFab.setOnClickListener {
+            // TODO: This is temporary, and from investigating the API, woefully under-architected
+            // TODO: for the needs of adding a new watchlist
+            watchlistsViewModel.perform(WatchlistsAction.AddNewWatchlist("some object"))
+        }
     }
 
     // endregion

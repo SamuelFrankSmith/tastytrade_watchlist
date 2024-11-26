@@ -35,7 +35,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
-        compose = true // TODO: maybe cleanup if unused
+        compose = true
         viewBinding = true
     }
 }
