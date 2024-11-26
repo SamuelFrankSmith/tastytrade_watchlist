@@ -1,11 +1,9 @@
 package com.samuelfranksmith.tastytrade.watchlists.listsoverview
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.samuelfranksmith.tastytrade.watchlists.R
+import androidx.recyclerview.widget.RecyclerView
 
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.placeholder.PlaceholderContent.PlaceholderItem
 import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentWatchlistsBinding
