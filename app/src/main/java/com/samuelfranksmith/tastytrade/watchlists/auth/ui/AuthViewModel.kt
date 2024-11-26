@@ -18,6 +18,7 @@ sealed class AuthenticationAction {
 }
 
 sealed class AuthenticationState {
+    data object Loading : AuthenticationState()
     data object AuthSucceeded : AuthenticationState()
     data class AuthFailed(val message: String) : AuthenticationState()
 }
@@ -44,6 +45,8 @@ class AuthViewModel() : ViewModel() {
     private val userFriendlyErrorString = "Authentication failed for an unknown reason. Please try again."
 
     private fun authenticate(username: String, password: String) {
+        authenticationState.postValue(AuthenticationState.Loading)
+
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.postAuthenticationCredentials(

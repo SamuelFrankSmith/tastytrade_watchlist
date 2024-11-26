@@ -37,6 +37,16 @@
         android:layout_height="wrap_content"
         android:text="@string/auth_button_login" />
 
+    <ProgressBar
+        android:id="@+id/authActivityIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:indeterminateTint="@color/purple_500"
+        android:indeterminateTintMode="src_atop"
+        tools:visibility="visible"/>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/authErrorLabel"
         style="@style/Font.Error"
