@@ -1,8 +1,7 @@
 package com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,15 +11,16 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import com.samuelfranksmith.tastytrade.watchlists.MainActivity
 import com.samuelfranksmith.tastytrade.watchlists.R
 import com.samuelfranksmith.tastytrade.watchlists.TTFragment
 import com.samuelfranksmith.tastytrade.watchlists.core.FragmentVMStates
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.placeholder.PlaceholderContent
+import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentWatchlistsBinding
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistModel
+import com.samuelfranksmith.tastytrade.watchlists.util.gone
+import com.samuelfranksmith.tastytrade.watchlists.util.visible
 
 /**
  * A fragment representing a list of Items.
@@ -34,8 +34,8 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
         when (state) {
             WatchlistsState.LoggedOut -> performLogout()
             WatchlistsState.Loading -> { /* TODO: Show activity indicator */ }
-            WatchlistsState.NoWatchlists -> { /* TODO: Show placeholder */ }
-            is WatchlistsState.DisplayWatchlists -> { /* TODO: Show watchlists */ }
+            WatchlistsState.NoWatchlists -> { displayNoWatchlistsFound() }
+            is WatchlistsState.DisplayWatchlists -> displayWatchlists(state.list)
         }
     }
 
@@ -73,12 +73,10 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
             )
         }
 
-        val view = inflater.inflate(R.layout.fragment_watchlists_list, container, false)
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = LinearLayoutManager(context)
-                adapter = WatchlistsRecyclerViewAdapter(PlaceholderContent.ITEMS)
-            }
+        val view = inflater.inflate(R.layout.fragment_watchlists, container, false)
+        (view.findViewById<RecyclerView>(R.id.watchlistsList) as? RecyclerView)?.let { r ->
+            r.layoutManager = LinearLayoutManager(context)
+            r.adapter = watchlistsAdapter
         }
 
         return view
@@ -97,7 +95,29 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
 
     // region Private
 
+    private var _binding: FragmentWatchlistsBinding? = null
+    private val binding
+        get() = _binding ?: run {
+            throw NullPointerException("View binding was unexpectedly null")
+        }
+
     private val watchlistsViewModel: WatchlistsViewModel by viewModels()
+
+    private val watchlistsAdapter = WatchlistsRecyclerViewAdapter()
+
+    @SuppressLint("NotifyDataSetChanged") /* We are always replacing entirety of values. */
+    private fun displayWatchlists(list: List<WatchlistModel>) {
+        binding.watchlistsNoneFoundLabel.gone()
+        binding.watchlistsList.visible()
+
+        watchlistsAdapter.values = list
+        watchlistsAdapter.notifyDataSetChanged()
+    }
+
+    private fun displayNoWatchlistsFound() {
+        binding.watchlistsList.gone()
+        binding.watchlistsNoneFoundLabel.visible()
+    }
 
     // endregion
 }

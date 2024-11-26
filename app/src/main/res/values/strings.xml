@@ -11,6 +11,7 @@
 
     <!-- Watchlists Overview -->
     <string name="watchlists_overview_fragment_label">Your Watchlists</string>
+    <string name="watchlists_no_watchlists_label">You have no watchlists.\nPlease use the + to create one.</string>
 
     <!-- Menu entries -->
     <string name="menu_action_logout">Logout</string>

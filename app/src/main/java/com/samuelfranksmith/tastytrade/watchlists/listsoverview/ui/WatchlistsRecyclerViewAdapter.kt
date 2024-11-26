@@ -4,22 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.placeholder.PlaceholderContent.PlaceholderItem
-import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentWatchlistsBinding
+import com.samuelfranksmith.tastytrade.watchlists.databinding.LiWatchlistsBinding
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistModel
 
 /**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
+ * Watchlists adapter that displays content for a list of Watchlists
  */
-class WatchlistsRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<WatchlistsRecyclerViewAdapter.ViewHolder>() {
+class WatchlistsRecyclerViewAdapter() : RecyclerView.Adapter<WatchlistsRecyclerViewAdapter.ViewHolder>() {
+
+    var values: List<WatchlistModel> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentWatchlistsBinding.inflate(
+            LiWatchlistsBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -30,20 +28,13 @@ class WatchlistsRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.name.text = item.name
     }
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentWatchlistsBinding) :
+    inner class ViewHolder(binding: LiWatchlistsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }
+        val name: TextView = binding.watchlistsEntryName
     }
-
 }

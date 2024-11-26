@@ -29,7 +29,5 @@ class MainActivity : AppCompatActivity() {
 
     fun logout() {
         findNavController(R.id.nav_host_fragment_content_main).setGraph(R.navigation.nav_graph)
-//        val fm = supportFragmentManager
-//        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }
