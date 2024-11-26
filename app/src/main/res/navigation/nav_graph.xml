@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress NavigationFile -->
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/AuthFragment">
+
+    <fragment
+        android:id="@+id/AuthFragment"
+        android:name="com.samuelfranksmith.tastytrade.watchlists.auth.ui.AuthFragment"
+        android:label="@string/auth_fragment_label"
+        tools:layout="@layout/fragment_auth">
+
+        <action
+            android:id="@+id/action_AuthFragment_Success"
+            app:destination="@id/WatchlistsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/WatchlistsFragment"
+        android:name="com.samuelfranksmith.tastytrade.watchlists.listsoverview.WatchlistsFragment"
+        android:label="@string/watchlists_overview_fragment_label"
+        tools:layout="@layout/fragment_watchlists">
+
+<!--        <argument-->
+<!--            android:name="unsureAboutArgumentNeeded"-->
+<!--            app:argType="string"-->
+<!--            android:defaultValue=""/>-->
+<!--        <action-->
+<!--            android:id="@+id/action_SecondFragment_to_FirstFragment"-->
+<!--            app:destination="@id/FirstFragment" />-->
+    </fragment>
+</navigation>

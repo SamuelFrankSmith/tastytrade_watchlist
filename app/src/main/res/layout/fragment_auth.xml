@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/Font.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marginL"
+        android:gravity="center"
+        android:text="@string/auth_title" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/authInputUsername"
+        style="@style/EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/auth_username_hint"
+        tools:text="Felix" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/authInputPassword"
+        style="@style/EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/auth_password_hint" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/authLogInButton"
+        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_button_login" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/authErrorLabel"
+        style="@style/Font.Error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marginL"
+        android:gravity="center"
+        tools:text="Wow, what a big error you just experienced!\nA new line for good measure." />
+
+</LinearLayout>

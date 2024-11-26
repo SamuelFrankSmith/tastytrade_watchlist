@@ -1,3 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Tasty Trade Watchlists</string>
+
+    <!-- Auth Strings -->
+    <string name="auth_fragment_label">Authentication</string>
+    <string name="auth_title">Please authenticate to continue</string>
+    <string name="auth_username_hint">Sandbox User</string>
+    <string name="auth_password_hint">Sandbox Password</string>
+    <string name="auth_button_login">Log In</string>
+
+    <!-- Watchlists Overview -->
+    <string name="watchlists_overview_fragment_label">Your Watchlists</string>
+
 </resources>
