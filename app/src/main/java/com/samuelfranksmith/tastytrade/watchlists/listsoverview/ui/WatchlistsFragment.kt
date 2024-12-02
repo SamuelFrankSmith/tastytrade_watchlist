@@ -10,6 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,7 +18,6 @@ import androidx.lifecycle.Observer
 import com.samuelfranksmith.tastytrade.watchlists.R
 import com.samuelfranksmith.tastytrade.watchlists.TTFragment
 import com.samuelfranksmith.tastytrade.watchlists.core.FragmentVMStates
-import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentAuthBinding
 import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentWatchlistsBinding
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistModel
 import com.samuelfranksmith.tastytrade.watchlists.util.gone
@@ -37,6 +37,7 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
             WatchlistsState.Loading -> { /* TODO: Show activity indicator */ }
             WatchlistsState.NoWatchlists -> { displayNoWatchlistsFound() }
             is WatchlistsState.DisplayWatchlists -> displayWatchlists(state.list)
+            WatchlistsState.EncounteredError -> { Toast.makeText(activity, getString(R.string.error_generic), Toast.LENGTH_LONG).show() }
         }
     }
 
@@ -45,11 +46,13 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.menu_watchlists, menu)
+        menu.setGroupDividerEnabled(true)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.menu_action_logout -> watchlistsViewModel.perform(WatchlistsAction.TappedLogOut)
+            R.id.menu_action_refresh -> watchlistsViewModel.perform(WatchlistsAction.Refresh)
         }
 
         return true
@@ -92,9 +95,15 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
 
         binding.watchlistsFab.setOnClickListener {
             // TODO: This is temporary, and from investigating the API, woefully under-architected
-            // TODO: for the needs of adding a new watchlist
+            // TODO: for the needs of adding a new watchlist. See notes in the respective ViewModel.
             watchlistsViewModel.perform(WatchlistsAction.AddNewWatchlist("some object"))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        watchlistsViewModel.perform(WatchlistsAction.FetchInitialScreenData)
     }
 
     override fun onDestroyView() {
@@ -117,7 +126,12 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
 
     private val watchlistsAdapter = WatchlistsRecyclerViewAdapter()
 
-    @SuppressLint("NotifyDataSetChanged") /* We are always replacing entirety of values. */
+    /* Suppression:
+     * We are always replacing entirety of values.
+     * I would have much preferred writing a generic adapter that helps with cell and value
+     * comparisons across the app, but I felt it was outside the scope of this task.
+     */
+    @SuppressLint("NotifyDataSetChanged")
     private fun displayWatchlists(list: List<WatchlistModel>) {
         binding.watchlistsNoneFoundLabel.gone()
         binding.watchlistsList.visible()

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">A Tasty Trade Watchlists</string>
+    <!-- Generic -->
+    <string name="error_generic">We have encountered an issue and were not able to fetch your data. We are sorry for the inconvenience and are investigating the issue.</string>
 
     <!-- Auth Strings -->
     <string name="auth_fragment_label">Authentication</string>
@@ -15,5 +17,6 @@
 
     <!-- Menu entries -->
     <string name="menu_action_logout">Logout</string>
+    <string name="menu_action_refresh">Refresh</string>
 
 </resources>

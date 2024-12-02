@@ -1,6 +1,7 @@
 package com.samuelfranksmith.tastytrade.watchlists.listsoverview
 
 import com.samuelfranksmith.tastytrade.watchlists.auth.data.models.AuthResponseModel
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistResponseModel
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -20,7 +21,7 @@ interface WatchlistsInterface {
      * Fetches all of the user's watchlists
      */
     @GET("watchlists")
-    fun getUserWatchlists()
+    fun getUserWatchlists(): Call<WatchlistResponseModel>
 
     /**
      * Fetches a specified user watchlist.
