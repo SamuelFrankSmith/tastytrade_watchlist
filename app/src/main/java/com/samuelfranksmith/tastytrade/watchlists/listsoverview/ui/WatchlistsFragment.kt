@@ -51,7 +51,7 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.menu_action_logout -> watchlistsViewModel.perform(WatchlistsAction.TappedLogOut)
+            R.id.menu_action_logout -> performLogout()
             R.id.menu_action_refresh -> watchlistsViewModel.perform(WatchlistsAction.Refresh)
         }
 
