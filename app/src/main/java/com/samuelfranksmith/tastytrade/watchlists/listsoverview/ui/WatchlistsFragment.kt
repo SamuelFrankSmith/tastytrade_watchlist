@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import com.samuelfranksmith.tastytrade.watchlists.R
 import com.samuelfranksmith.tastytrade.watchlists.TTFragment
 import com.samuelfranksmith.tastytrade.watchlists.core.FragmentVMStates
+import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentAuthBinding
 import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentWatchlistsBinding
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistModel
 import com.samuelfranksmith.tastytrade.watchlists.util.gone
@@ -62,6 +63,7 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentWatchlistsBinding.inflate(inflater, container, false)
 
         // Demonstrate Menu and add logout functionality -- though, this wouldn't
         // live in each individual fragment for a production-ready app
@@ -73,13 +75,12 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
             )
         }
 
-        val view = inflater.inflate(R.layout.fragment_watchlists, container, false)
-        (view.findViewById<RecyclerView>(R.id.watchlistsList) as? RecyclerView)?.let { r ->
+        (binding.root.findViewById<RecyclerView>(R.id.watchlistsList) as? RecyclerView)?.let { r ->
             r.layoutManager = LinearLayoutManager(context)
             r.adapter = watchlistsAdapter
         }
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,6 +95,11 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
             // TODO: for the needs of adding a new watchlist
             watchlistsViewModel.perform(WatchlistsAction.AddNewWatchlist("some object"))
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     // endregion
