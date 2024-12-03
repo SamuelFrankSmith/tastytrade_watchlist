@@ -1,13 +1,19 @@
-package com.samuelfranksmith.tastytrade.watchlists.listsoverview
+package com.samuelfranksmith.tastytrade.watchlists.listsoverview.data
 
 import com.samuelfranksmith.tastytrade.watchlists.core.ApiResult
 import com.samuelfranksmith.tastytrade.watchlists.core.NetworkManager
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistResponseModel
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistResponseModel
 import com.samuelfranksmith.tastytrade.watchlists.util.toApiResultError
 import okio.IOException
 
 class WatchlistsRepository {
 
+    /**
+     * Fetches the existing User watchlists on the currently authenticated user.
+     *
+     * @return [ApiResult.Success<WatchlistResponseModel>] if fetch was successful;
+     *  ApiResult.Error otherwise.
+     */
     fun getUserWatchlists(): ApiResult<WatchlistResponseModel> {
         lateinit var result: ApiResult<WatchlistResponseModel>
 

@@ -19,12 +19,14 @@ import com.samuelfranksmith.tastytrade.watchlists.R
 import com.samuelfranksmith.tastytrade.watchlists.TTFragment
 import com.samuelfranksmith.tastytrade.watchlists.core.FragmentVMStates
 import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentWatchlistsBinding
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistModel
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistModel
 import com.samuelfranksmith.tastytrade.watchlists.util.gone
 import com.samuelfranksmith.tastytrade.watchlists.util.visible
 
 /**
- * A fragment representing a list of Items.
+ * [WatchlistsFragment] will display the User's watchlists.
+ * [TODO] Tapping on a watchlist will display more details regarding that watchlist
+ * [TODO] Tapping the Fab will start a new flow in which a user constructs a new watchlist.
  */
 class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<WatchlistsState> {
 
@@ -35,9 +37,10 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
         when (state) {
             WatchlistsState.LoggedOut -> performLogout()
             WatchlistsState.Loading -> { /* TODO: Show activity indicator */ }
-            WatchlistsState.NoWatchlists -> { displayNoWatchlistsFound() }
+            WatchlistsState.NoWatchlists -> displayNoWatchlistsFound()
             is WatchlistsState.DisplayWatchlists -> displayWatchlists(state.list)
-            WatchlistsState.EncounteredError -> { Toast.makeText(activity, getString(R.string.error_generic), Toast.LENGTH_LONG).show() }
+            WatchlistsState.EncounteredError -> Toast.makeText(activity, getString(R.string.error_generic), Toast.LENGTH_LONG).show()
+            is WatchlistsState.NavigateToWatchlist -> { /* TODO: navigate */ }
         }
     }
 
@@ -60,7 +63,6 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
 
     // endregion
     // region Fragment Overrides
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,7 +97,7 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
 
         binding.watchlistsFab.setOnClickListener {
             // TODO: This is temporary, and from investigating the API, woefully under-architected
-            // TODO: for the needs of adding a new watchlist. See notes in the respective ViewModel.
+            // TODO: for the needs of adding a new watchlist. See notes in the [WatchlistsViewModel].
             watchlistsViewModel.perform(WatchlistsAction.AddNewWatchlist("some object"))
         }
     }

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.samuelfranksmith.tastytrade.watchlists.databinding.LiWatchlistsBinding
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistModel
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistModel
 
 /**
  * Watchlists adapter that displays content for a list of Watchlists

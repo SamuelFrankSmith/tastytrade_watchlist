@@ -1,4 +1,4 @@
-package com.samuelfranksmith.tastytrade.watchlists.listsoverview.data
+package com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models
 
 import com.google.gson.annotations.SerializedName
 import com.samuelfranksmith.tastytrade.watchlists.core.ItemsListModel

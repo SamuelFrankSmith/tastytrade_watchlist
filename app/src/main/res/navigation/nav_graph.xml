@@ -33,4 +33,16 @@
 <!--            android:id="@+id/action_SecondFragment_to_FirstFragment"-->
 <!--            app:destination="@id/FirstFragment" />-->
     </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/WatchlistDetailsFragment"-->
+<!--        android:name="com.samuelfranksmith.tastytrade.watchlists.auth.ui.WatchlistDetailsFragment"-->
+<!--        android:label="@string/auth_fragment_label"-->
+<!--        tools:layout="@layout/fragment_auth">-->
+
+<!--        <action-->
+<!--            android:id="@+id/action_AuthFragment_Success_to_WatchlistsFragment"-->
+<!--            app:destination="@id/WatchlistsFragment"-->
+<!--            app:popUpTo="@id/nav_graph"-->
+<!--            app:popUpToInclusive="true"/>-->
+<!--    </fragment>-->
 </navigation>

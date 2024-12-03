@@ -16,6 +16,8 @@ class AuthRepository {
      *
      * @param username Username to authenticate
      * @param password Password to authenticate
+     * @return [ApiResult.Success<AuthResponseModel>] if auth was successful;
+     *  ApiResult.Error otherwise.
      */
    fun postAuthenticationCredentials(
         username: String,

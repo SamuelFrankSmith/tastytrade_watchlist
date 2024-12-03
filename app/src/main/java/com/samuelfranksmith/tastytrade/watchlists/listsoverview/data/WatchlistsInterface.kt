@@ -1,7 +1,7 @@
-package com.samuelfranksmith.tastytrade.watchlists.listsoverview
+package com.samuelfranksmith.tastytrade.watchlists.listsoverview.data
 
 import com.samuelfranksmith.tastytrade.watchlists.auth.data.models.AuthResponseModel
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistResponseModel
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistResponseModel
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body

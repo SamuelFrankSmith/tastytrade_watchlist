@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samuelfranksmith.tastytrade.watchlists.core.ApiResult
 import com.samuelfranksmith.tastytrade.watchlists.core.ViewModelActions
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.WatchlistsRepository
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistModel
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistsRepository
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistModel
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui.WatchlistsAction.FetchInitialScreenData
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui.WatchlistsAction.AddNewWatchlist
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui.WatchlistsAction.Refresh
@@ -19,7 +19,8 @@ import kotlinx.coroutines.launch
 sealed class WatchlistsAction {
     data object FetchInitialScreenData : WatchlistsAction()
     data object Refresh : WatchlistsAction()
-    data class AddNewWatchlist(val name: String) : WatchlistsAction()
+    data class AddNewWatchlist(val name: String) : WatchlistsAction() // FIXME: Possibly unnecessary
+    data class TappedWatchlist(val name: String) : WatchlistsAction()
 }
 
 sealed class WatchlistsState {
@@ -28,6 +29,7 @@ sealed class WatchlistsState {
     data object EncounteredError : WatchlistsState()
     data object Loading : WatchlistsState()
     data object LoggedOut : WatchlistsState()
+    data class NavigateToWatchlist(val name: String) : WatchlistsState()
 }
 // endregion
 
@@ -42,6 +44,7 @@ class WatchlistsViewModel() : ViewModel(), ViewModelActions<WatchlistsAction> {
             is AddNewWatchlist -> createWatchlistOnUser()
             FetchInitialScreenData -> fetchUserWatchlists()
             Refresh -> fetchUserWatchlists()
+            is WatchlistsAction.TappedWatchlist -> watchlistsState.postValue(WatchlistsState.NavigateToWatchlist(action.name))
         }
     }
     // endregion

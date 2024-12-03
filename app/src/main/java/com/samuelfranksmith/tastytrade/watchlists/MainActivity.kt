@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // TODO: I *think* that I will need to update this Builder for back/up navigation.
-        // TODO: There's certainly a better way, but I do not yet understand the navigation framework
-        // TODO: well enough yet. Need to think more on this.
+        // TODO: There's certainly a better way, but I do not yet understand the
+        // TODO: navigation framework well enough yet. Need to think more on this.
         //      appBarConfiguration = AppBarConfiguration(navController.graph) vs
         //      appBarConfiguration = AppBarConfiguration.Builder(R.id.WatchlistsFragment).build()
         appBarConfiguration = AppBarConfiguration.Builder(R.id.WatchlistsFragment).build()
