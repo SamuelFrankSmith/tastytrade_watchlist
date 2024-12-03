@@ -1,5 +1,6 @@
 package com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -10,7 +11,7 @@ import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.Watc
 /**
  * Watchlists adapter that displays content for a list of Watchlists
  */
-class WatchlistsRecyclerViewAdapter() : RecyclerView.Adapter<WatchlistsRecyclerViewAdapter.ViewHolder>() {
+class WatchlistsRecyclerViewAdapter(private val listener: (String) -> Unit) : RecyclerView.Adapter<WatchlistsRecyclerViewAdapter.ViewHolder>() {
 
     var values: List<WatchlistModel> = emptyList()
 
@@ -28,7 +29,14 @@ class WatchlistsRecyclerViewAdapter() : RecyclerView.Adapter<WatchlistsRecyclerV
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.name.text = item.name
+        item.name?.let {
+            holder.name.text = item.name
+            holder.itemView.setOnClickListener {
+                listener(item.name)
+            }
+        } ?: run {
+            Log.e("DEBUG", "Log this anomalous event to some system.")
+        }
     }
 
     override fun getItemCount(): Int = values.size

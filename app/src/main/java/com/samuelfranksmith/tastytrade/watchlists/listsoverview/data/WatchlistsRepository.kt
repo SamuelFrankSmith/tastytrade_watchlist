@@ -2,6 +2,7 @@ package com.samuelfranksmith.tastytrade.watchlists.listsoverview.data
 
 import com.samuelfranksmith.tastytrade.watchlists.core.ApiResult
 import com.samuelfranksmith.tastytrade.watchlists.core.NetworkManager
+import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistModel
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistResponseModel
 import com.samuelfranksmith.tastytrade.watchlists.util.toApiResultError
 import okio.IOException
@@ -34,5 +35,15 @@ class WatchlistsRepository {
         }
 
         return result
+    }
+
+    /**
+     *
+     */
+    fun getUserWatchlist(watchlistName: String): ApiResult<WatchlistModel> {
+
+
+        // FIXME:
+        return ApiResult.Error()
     }
 }

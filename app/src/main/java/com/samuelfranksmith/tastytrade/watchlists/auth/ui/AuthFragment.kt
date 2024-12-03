@@ -78,6 +78,7 @@ class AuthFragment : Fragment(), FragmentVMStates<AuthenticationState> {
 
     private fun userSuccessfullyLoggedIn() {
         binding.authActivityIndicator.invisible()
+        // Remove sensitive info from memory when possible
         binding.authInputPassword.setText("")
         binding.authInputUsername.setText("")
 

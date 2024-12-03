@@ -72,7 +72,7 @@ class WatchlistsViewModel() : ViewModel(), ViewModelActions<WatchlistsAction> {
                         watchlistsState.postValue(WatchlistsState.EncounteredError)
                     }
                     is ApiResult.Success -> {
-                        response.value.data?.items?.let {
+                        response.value.data.items?.let {
                             watchlistsState.postValue(WatchlistsState.DisplayWatchlists(it))
                         } ?: run {
                             watchlistsState.postValue(WatchlistsState.EncounteredError)

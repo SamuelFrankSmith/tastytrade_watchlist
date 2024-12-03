@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.samuelfranksmith.tastytrade.watchlists.auth.data.AuthRepository
 import com.samuelfranksmith.tastytrade.watchlists.core.ApiResult
@@ -27,14 +28,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
+        // Builder(...) defines the top-level fragments. This is to prevent using the back button to reach Auth.
+        appBarConfiguration = AppBarConfiguration.Builder(R.id.AuthFragment, R.id.WatchlistsFragment).build()
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // TODO: I *think* that I will need to update this Builder for back/up navigation.
-        // TODO: There's certainly a better way, but I do not yet understand the
-        // TODO: navigation framework well enough yet. Need to think more on this.
-        //      appBarConfiguration = AppBarConfiguration(navController.graph) vs
-        //      appBarConfiguration = AppBarConfiguration.Builder(R.id.WatchlistsFragment).build()
-        appBarConfiguration = AppBarConfiguration.Builder(R.id.WatchlistsFragment).build()
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // Back button on supported fragments does not work without explicit direction.
+        binding.toolbar.setNavigationOnClickListener {
+            NavigationUI.navigateUp(navController, appBarConfiguration)
+        }
     }
 
     fun logout() {
@@ -44,6 +46,11 @@ class MainActivity : AppCompatActivity() {
 
     // region Private
 
+    /**
+     *  Performs a logout using an [AuthRepository].
+     *
+     *  NOTE: This could, arguably should, have been done via a viewmodel for the MainActivity.
+     */
     private fun performLogoutRequest() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {

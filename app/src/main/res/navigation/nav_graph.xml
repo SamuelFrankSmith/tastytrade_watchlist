@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress NavigationFile -->
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,30 +18,27 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true"/>
     </fragment>
+
     <fragment
         android:id="@+id/WatchlistsFragment"
         android:name="com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui.WatchlistsFragment"
         android:label="@string/watchlists_overview_fragment_label"
         tools:layout="@layout/li_watchlists">
 
-<!--        <argument-->
-<!--            android:name="unsureAboutArgumentNeeded"-->
-<!--            app:argType="string"-->
-<!--            android:defaultValue=""/>-->
-<!--        <action-->
-<!--            android:id="@+id/action_SecondFragment_to_FirstFragment"-->
-<!--            app:destination="@id/FirstFragment" />-->
+        <action
+            android:id="@+id/action_WatchlistsFragment_to_WatchlistDetailsFragment"
+            app:destination="@id/WatchlistDetailsFragment" />
     </fragment>
-<!--    <fragment-->
-<!--        android:id="@+id/WatchlistDetailsFragment"-->
-<!--        android:name="com.samuelfranksmith.tastytrade.watchlists.auth.ui.WatchlistDetailsFragment"-->
-<!--        android:label="@string/auth_fragment_label"-->
-<!--        tools:layout="@layout/fragment_auth">-->
 
+    <fragment
+        android:id="@+id/WatchlistDetailsFragment"
+        android:name="com.samuelfranksmith.tastytrade.watchlists.listdetails.ui.WatchlistDetailsFragment">
+        <argument
+            android:name="watchlist_name"
+            android:defaultValue=""
+            app:argType="string" />
 <!--        <action-->
-<!--            android:id="@+id/action_AuthFragment_Success_to_WatchlistsFragment"-->
-<!--            app:destination="@id/WatchlistsFragment"-->
-<!--            app:popUpTo="@id/nav_graph"-->
-<!--            app:popUpToInclusive="true"/>-->
-<!--    </fragment>-->
+<!--            android:id="@+id/action_WatchlistDetailsFragment_to_WatchlistsFragment"-->
+<!--            app:popUpTo="@id/WatchlistsFragment" />-->
+    </fragment>
 </navigation>
