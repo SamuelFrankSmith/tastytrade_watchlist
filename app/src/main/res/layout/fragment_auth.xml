@@ -26,6 +26,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/authInputPassword"
         style="@style/EditText"
+        android:inputType="textVisiblePassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/auth_password_hint" />

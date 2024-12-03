@@ -66,9 +66,8 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // TODO: I'm entirely sure what the expected pattern for loading bundle arguments is when using the Navigation components.
+        // TODO: I'm not entirely sure what the expected pattern for loading bundle arguments is when using the Navigation components.
         watchlistName = arguments?.getString(KEY_WATCHLIST_NAME)
-
 
         val view = ComposeView(requireContext()).apply {
             setContent {
@@ -104,12 +103,10 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
     // region Private
 
     private val watchlistDetailsViewModel: WatchlistDetailsViewModel by viewModels()
-
-    // TODO: validate that this works!!
+    
     private var watchlistName: String? = null
 
     // TODO: I'd rather this fragment be Compose-based
     // TODO: If not Compose, I need to ensure my adapter supports a header list item and a symbol list item
 //    private val watchlistDetailsAdapter = WatchlistsRecyclerViewAdapter() // FIXME: wrong adapter
-
 }
