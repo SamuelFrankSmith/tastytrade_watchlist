@@ -35,7 +35,6 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
 
     override fun handle(state: WatchlistsState) {
         when (state) {
-            WatchlistsState.LoggedOut -> performLogout()
             WatchlistsState.Loading -> { /* TODO: Show activity indicator */ }
             WatchlistsState.NoWatchlists -> displayNoWatchlistsFound()
             is WatchlistsState.DisplayWatchlists -> displayWatchlists(state.list)

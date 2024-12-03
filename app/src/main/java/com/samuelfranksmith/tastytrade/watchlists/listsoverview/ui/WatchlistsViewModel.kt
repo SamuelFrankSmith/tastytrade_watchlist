@@ -28,7 +28,6 @@ sealed class WatchlistsState {
     data class DisplayWatchlists(val list: List<WatchlistModel>) : WatchlistsState()
     data object EncounteredError : WatchlistsState()
     data object Loading : WatchlistsState()
-    data object LoggedOut : WatchlistsState()
     data class NavigateToWatchlist(val name: String) : WatchlistsState()
 }
 // endregion
