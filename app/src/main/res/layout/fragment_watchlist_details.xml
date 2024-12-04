@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGrey">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/watchlistDetailsTitle"
+        style="@style/Font.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marginS"
+        app:layout_constraintBottom_toTopOf="@id/watchlistDetailsList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="My favorite watchlist" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/watchlistDetailsList"
+        android:name="com.samuelfranksmith.tastytrade.watchlists.listsoverview.WatchlistsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/watchlistDetailsTitle"
+        tools:context=".listsoverview.ui.WatchlistsFragment"
+        tools:listitem="@layout/li_watchlists" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

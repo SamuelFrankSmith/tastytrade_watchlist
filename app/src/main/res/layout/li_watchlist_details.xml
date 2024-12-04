@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/watchlistDetailsRowSymbol"
+        style="@style/Font.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="AAPL" />
+
+    <!-- Bid -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/watchlistDetailsRowBidTitle"
+        style="@style/Font.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/bid_price"
+        app:layout_constraintEnd_toStartOf="@id/watchlistDetailsRowAskTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/watchlistDetailsRowSymbol" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/watchlistDetailsRowBidValue"
+        style="@style/Font.Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/watchlistDetailsRowBidTitle"
+        app:layout_constraintStart_toStartOf="@id/watchlistDetailsRowBidTitle"
+        app:layout_constraintTop_toBottomOf="@id/watchlistDetailsRowBidTitle"
+        tools:text="223.32" />
+
+    <!-- Ask -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/watchlistDetailsRowAskTitle"
+        style="@style/Font.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ask_price"
+        app:layout_constraintEnd_toStartOf="@id/watchlistDetailsRowLastTitle"
+        app:layout_constraintStart_toEndOf="@id/watchlistDetailsRowBidTitle"
+        app:layout_constraintTop_toBottomOf="@id/watchlistDetailsRowSymbol" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/watchlistDetailsRowAskValue"
+        style="@style/Font.Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/watchlistDetailsRowAskTitle"
+        app:layout_constraintStart_toStartOf="@id/watchlistDetailsRowAskTitle"
+        app:layout_constraintTop_toBottomOf="@id/watchlistDetailsRowAskTitle"
+        tools:text="234.21" />
+
+    <!-- Last -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/watchlistDetailsRowLastTitle"
+        style="@style/Font.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/last_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/watchlistDetailsRowAskTitle"
+        app:layout_constraintTop_toBottomOf="@id/watchlistDetailsRowSymbol" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/watchlistDetailsRowLastValue"
+        style="@style/Font.Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/watchlistDetailsRowLastTitle"
+        app:layout_constraintStart_toStartOf="@id/watchlistDetailsRowLastTitle"
+        app:layout_constraintTop_toBottomOf="@id/watchlistDetailsRowLastTitle"
+        tools:text="342.23" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/marginL"
+        android:layout_marginEnd="@dimen/marginL"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/watchlistDetailsRowBidValue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

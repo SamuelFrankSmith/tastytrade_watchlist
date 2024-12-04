@@ -1,7 +1,10 @@
 package com.samuelfranksmith.tastytrade.watchlists.listdetails.ui
 
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.annotation.UiThread
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +23,6 @@ import kotlinx.coroutines.launch
 sealed class WatchlistDetailsAction {
     data class FetchInformationForWatchlist(val watchlistName: String) : WatchlistDetailsAction()
     data object Refresh : WatchlistDetailsAction()
-    // TODO: DO I need a public (i.e. Action) for the symbol refresh? First thought: No
 }
 
 sealed class WatchlistDetailsState {
@@ -29,7 +31,7 @@ sealed class WatchlistDetailsState {
     data object EncounteredError : WatchlistDetailsState()
 }
 
-class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetailsAction> {
+class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetailsAction>, DefaultLifecycleObserver {
 
     // region Public
     var watchlistDetailsState = MutableLiveData<WatchlistDetailsState>()
@@ -39,7 +41,7 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
     override fun perform(action: WatchlistDetailsAction) {
         when (action) {
             is WatchlistDetailsAction.FetchInformationForWatchlist -> fetchWatchlistDetails(action.watchlistName)
-            WatchlistDetailsAction.Refresh -> TODO()
+            WatchlistDetailsAction.Refresh -> { /* TODO: */}
         }
     }
 
@@ -49,6 +51,8 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
 
     private val marketDataRepository = MarketDataRepository()
     private val watchlistsRepository = WatchlistsRepository()
+
+//    private val updateTimer = object :
 
     private var _watchlistName: String? = null
     private val watchlistName
@@ -125,7 +129,17 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
         return priceModel
     }
 
+    // region DefaultLifecycleObserver Overrides
 
+    override fun onResume(owner: LifecycleOwner) {
+        //isResumed = true
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        //isResumed = false
+    }
+
+    // endregion
     // endregion
 
 }

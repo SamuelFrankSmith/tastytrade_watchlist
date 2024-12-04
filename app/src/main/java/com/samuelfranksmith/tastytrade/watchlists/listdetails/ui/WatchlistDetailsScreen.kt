@@ -30,7 +30,6 @@ data class WatchlistDetailsComposableData(
     val watchlistEntries: List<SymbolMarketPriceModel>,
 )
 
-
 @Preview
 @Composable
 fun WatchlistDetailsScreen(
