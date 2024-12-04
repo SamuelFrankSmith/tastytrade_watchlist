@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samuelfranksmith.tastytrade.watchlists.core.ApiResult
+import com.samuelfranksmith.tastytrade.watchlists.core.NetworkManager
 import com.samuelfranksmith.tastytrade.watchlists.core.ViewModelActions
 import com.samuelfranksmith.tastytrade.watchlists.listdetails.data.MarketDataRepository
 import com.samuelfranksmith.tastytrade.watchlists.listdetails.data.models.SymbolMarketPriceModel
@@ -16,9 +17,12 @@ import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.WatchlistsR
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Timer
 
 sealed class WatchlistDetailsAction {
     data class FetchInformationForWatchlist(val watchlistName: String) : WatchlistDetailsAction()
@@ -52,7 +56,7 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
     private val marketDataRepository = MarketDataRepository()
     private val watchlistsRepository = WatchlistsRepository()
 
-//    private val updateTimer = object :
+    private var refreshTask: Job? = null
 
     private var _watchlistName: String? = null
     private val watchlistName
@@ -60,14 +64,17 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
             throw NullPointerException("Watchlist Name (i.e. key) unexpectedly null")
         }
 
-    // TODO: In my ideal world, I'd like to post individual symbol pricing back to the UI
-    //  instead of this aggregate.
-    //  "Skeleton" loading the individual prices back, with each row having it's own progress/activity
-    //  indicator would lead to an improved user experience (or perception thereof).
-    //  Biggest challenge to this is my choosing to use Compose and not being familiar enough with
-    //  the appropriate patterns to update piecemeal.
-    private fun fetchWatchlistDetails(watchlistName: String) {
-        watchlistDetailsState.postValue(WatchlistDetailsState.Loading)
+    private fun createUpdateTask(): Job = viewModelScope.launch {
+        while (true) {
+            delay(NetworkManager.FIVE_SECONDS_IN_MILLIS)
+            fetchWatchlistDetails(watchlistName, shouldDisplayLoading = false)
+        }
+    }
+    
+    private fun fetchWatchlistDetails(watchlistName: String, shouldDisplayLoading: Boolean = true) {
+        if (shouldDisplayLoading) {
+            watchlistDetailsState.postValue(WatchlistDetailsState.Loading)
+        }
 
         _watchlistName = watchlistName
 
@@ -93,6 +100,10 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
                             watchlistEntries = symbolPricingList
                         )
                         watchlistDetailsState.postValue((WatchlistDetailsState.DisplayWatchlistDetails(watchlistModel)))
+
+                        if (refreshTask == null) {
+                            refreshTask = createUpdateTask()
+                        }
                     }
                 }
 
@@ -132,14 +143,22 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
     // region DefaultLifecycleObserver Overrides
 
     override fun onResume(owner: LifecycleOwner) {
-        //isResumed = true
+        // Do nothing. The Fragment will request new data when it resumes.
+        // This will result in the coroutine being recreated.
     }
 
     override fun onPause(owner: LifecycleOwner) {
-        //isResumed = false
+        refreshTask?.cancel()
+        refreshTask = null
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        // Want to be extra sure this isn't left running.
+        refreshTask?.cancel()
+        refreshTask = null
     }
 
     // endregion
     // endregion
-
 }

@@ -36,5 +36,7 @@ object NetworkManager {
         .build()
         .create(ApiInterface::class.java)
 
+    const val FIVE_SECONDS_IN_MILLIS = 5_000L
+
     // endregion
 }

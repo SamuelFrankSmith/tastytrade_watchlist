@@ -18,10 +18,8 @@ import com.samuelfranksmith.tastytrade.watchlists.R
 import com.samuelfranksmith.tastytrade.watchlists.TTFragment
 import com.samuelfranksmith.tastytrade.watchlists.core.FragmentVMStates
 import com.samuelfranksmith.tastytrade.watchlists.databinding.FragmentWatchlistDetailsBinding
-import com.samuelfranksmith.tastytrade.watchlists.listdetails.data.models.SymbolMarketPriceModel
 import com.samuelfranksmith.tastytrade.watchlists.listdetails.ui.WatchlistDetailsState.DisplayWatchlistDetails
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistModel
-import com.samuelfranksmith.tastytrade.watchlists.listsoverview.ui.WatchlistsRecyclerViewAdapter
 
 import kotlin.getValue
 
@@ -92,6 +90,8 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycle.addObserver(watchlistDetailsViewModel)
 
         watchlistDetailsViewModel.watchlistDetailsState.observe(viewLifecycleOwner, Observer { state ->
             handle(state)
