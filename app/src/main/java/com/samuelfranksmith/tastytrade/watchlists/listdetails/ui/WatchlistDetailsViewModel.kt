@@ -45,7 +45,7 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
     override fun perform(action: WatchlistDetailsAction) {
         when (action) {
             is WatchlistDetailsAction.FetchInformationForWatchlist -> fetchWatchlistDetails(action.watchlistName)
-            WatchlistDetailsAction.Refresh -> { /* TODO: */}
+            WatchlistDetailsAction.Refresh -> fetchWatchlistDetails(watchlistName)
         }
     }
 
@@ -70,7 +70,7 @@ class WatchlistDetailsViewModel() : ViewModel(), ViewModelActions<WatchlistDetai
             fetchWatchlistDetails(watchlistName, shouldDisplayLoading = false)
         }
     }
-    
+
     private fun fetchWatchlistDetails(watchlistName: String, shouldDisplayLoading: Boolean = true) {
         if (shouldDisplayLoading) {
             watchlistDetailsState.postValue(WatchlistDetailsState.Loading)
