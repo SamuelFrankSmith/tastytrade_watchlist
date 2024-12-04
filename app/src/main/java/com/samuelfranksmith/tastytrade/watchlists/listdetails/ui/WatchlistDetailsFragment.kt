@@ -7,14 +7,15 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import com.samuelfranksmith.tastytrade.watchlists.R
 import com.samuelfranksmith.tastytrade.watchlists.TTFragment
 import com.samuelfranksmith.tastytrade.watchlists.core.FragmentVMStates
+import com.samuelfranksmith.tastytrade.watchlists.core.ui.EmptyScreen
 import com.samuelfranksmith.tastytrade.watchlists.listdetails.ui.WatchlistDetailsState.DisplayWatchlistDetails
 
 import kotlin.getValue
@@ -32,6 +33,8 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
     override fun handle(state: WatchlistDetailsState) {
         when (state) {
             is DisplayWatchlistDetails -> { /* TODO: Whatever this is */ }
+            WatchlistDetailsState.EncounteredError -> { /* TODO: Whatever this is */ }
+            WatchlistDetailsState.Loading -> { /* TODO: Whatever this is. */ }
         }
     }
 
@@ -55,29 +58,22 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
     // endregion
     // region Fragment Overrides
 
-    // TODO: be sure to set app bar title appropriately based on provided 'key'
-
-    // TODO: 1. navigate to this fragment with the correct arg
-    // TODO: 2. use arg to set title of appbar
-    // TODO: 3. Then implement fragment overrides
-    // TODO: 4. THen add Compose view
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // TODO: I'm not entirely sure what the expected pattern for loading bundle arguments is when using the Navigation components.
-        watchlistName = arguments?.getString(KEY_WATCHLIST_NAME)
+        // TODO: I'm not entirely sure what the expected/accepted pattern for
+        //  loading bundle arguments is when using the Navigation components.
+        _watchlistName = arguments?.getString(KEY_WATCHLIST_NAME)
 
+        // TODO: Figuring out the best way to marry my States with immutable Compose views...
+        //  I need to be able to show the EmptyScreen() state, LoadingScreen() state, and the content state.
+        //  I know I can use mutableStates, but how to cleanly do that? hmm.
         val view = ComposeView(requireContext()).apply {
             setContent {
-                WatchlistDetailsScreen(modelForTesting())
-//                watchlistName?.let {
-//                    Text(it)
-//                }
+                EmptyScreen()
             }
         }
-//        _binding = FragmentWatchlistsBinding.inflate(inflater, container, false)
 
         requireActivity().also { menuHost ->
             menuHost.addMenuProvider(
@@ -87,16 +83,23 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
             )
         }
 
-//        (binding.root.findViewById<RecyclerView>(R.id.watchlistsList) as? RecyclerView)?.let { r ->
-//            r.layoutManager = LinearLayoutManager(context)
-//            r.adapter = watchlistsAdapter
-//        }
-// TODO: after this recruiter call, run this and validate behavior of listener and 'hello world', then attempt to load bundle shtuff...
-//        return binding.root
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        watchlistDetailsViewModel.watchlistDetailsState.observe(viewLifecycleOwner, Observer { state ->
+            handle(state)
+        })
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        watchlistDetailsViewModel.perform(WatchlistDetailsAction.FetchInformationForWatchlist(watchlistName))
+    }
 
     // endregion
     // endregion
@@ -104,6 +107,18 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
     // region Private
 
     private val watchlistDetailsViewModel: WatchlistDetailsViewModel by viewModels()
-    
-    private var watchlistName: String? = null
+
+    // Note: This is overkill, but I'm unfamiliar enough with Navigation components and their
+    //  relation to fragment lifecycle events that this seems a safer fallback.
+    private var _watchlistName: String? = null
+    private val watchlistName
+        get() = _watchlistName ?: run {
+            val t = arguments?.getString(KEY_WATCHLIST_NAME)
+            if (t != null) {
+                _watchlistName = t
+                return t
+            } else {
+                throw NullPointerException("`watchlistName` was unexpectedly null")
+            }
+        }
 }

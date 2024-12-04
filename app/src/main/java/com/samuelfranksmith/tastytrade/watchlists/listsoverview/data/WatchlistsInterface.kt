@@ -1,6 +1,7 @@
 package com.samuelfranksmith.tastytrade.watchlists.listsoverview.data
 
 import com.samuelfranksmith.tastytrade.watchlists.auth.data.models.AuthResponseModel
+import com.samuelfranksmith.tastytrade.watchlists.listdetails.data.models.WatchlistDetailsResponseModel
 import com.samuelfranksmith.tastytrade.watchlists.listsoverview.data.models.WatchlistResponseModel
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -28,5 +29,5 @@ interface WatchlistsInterface {
      * @param watchlistName - The name for the desired watchlist.
      */
     @GET("watchlists/{watchlist_name}")
-    fun getWatchlist(@Path("watchlist_name") watchlistName: String)
+    fun getWatchlist(@Path("watchlist_name") watchlistName: String): Call<WatchlistDetailsResponseModel>
 }

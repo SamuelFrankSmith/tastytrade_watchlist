@@ -38,12 +38,34 @@ class WatchlistsRepository {
     }
 
     /**
+     * Fetches the details for a given watchlist on the currently authenticated user.
      *
+     * Note: This call will return the symbols for a given watchlist, but not fields (e.g., pricing)
+     * on those symbols.
+     *
+     * @param watchlistName - Name (i.e., key) for the desired watchlist.
+     * @return [ApiResult.Success<WatchlistModel>] if fetch was successful;
+     *  ApiResult.Error otherwise.
      */
     fun getUserWatchlist(watchlistName: String): ApiResult<WatchlistModel> {
+        lateinit var result: ApiResult<WatchlistModel>
 
+        val call = NetworkManager.client.getWatchlist(watchlistName)
 
-        // FIXME:
-        return ApiResult.Error()
+        try {
+            val response = call.execute()
+
+            response.body()?.let {
+                result = ApiResult.Success<WatchlistModel>(it.data)
+            } ?: response.errorBody()?.let { errorBody ->
+                result = errorBody.toApiResultError()
+            } ?: run {
+                result = ApiResult.Error()
+            }
+        } catch (ioe: IOException) {
+            result = ApiResult.Error(message = ioe.message.toString())
+        }
+
+        return result
     }
 }
