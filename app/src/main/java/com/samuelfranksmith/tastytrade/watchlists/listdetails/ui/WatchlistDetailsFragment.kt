@@ -71,9 +71,10 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
 
         val view = ComposeView(requireContext()).apply {
             setContent {
-                watchlistName?.let {
-                    Text(it)
-                }
+                WatchlistDetailsScreen(modelForTesting())
+//                watchlistName?.let {
+//                    Text(it)
+//                }
             }
         }
 //        _binding = FragmentWatchlistsBinding.inflate(inflater, container, false)
@@ -105,8 +106,4 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
     private val watchlistDetailsViewModel: WatchlistDetailsViewModel by viewModels()
     
     private var watchlistName: String? = null
-
-    // TODO: I'd rather this fragment be Compose-based
-    // TODO: If not Compose, I need to ensure my adapter supports a header list item and a symbol list item
-//    private val watchlistDetailsAdapter = WatchlistsRecyclerViewAdapter() // FIXME: wrong adapter
 }

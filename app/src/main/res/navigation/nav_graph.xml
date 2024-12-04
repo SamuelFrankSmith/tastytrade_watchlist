@@ -32,6 +32,7 @@
 
     <fragment
         android:id="@+id/WatchlistDetailsFragment"
+        android:label="@string/watchlist_details_fragment_label"
         android:name="com.samuelfranksmith.tastytrade.watchlists.listdetails.ui.WatchlistDetailsFragment">
         <argument
             android:name="watchlist_name"

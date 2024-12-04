@@ -4,12 +4,17 @@ import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -33,6 +38,37 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+object TTTextStyle {
+    val ScreenTitle = TextStyle(
+        fontSize = 32.sp,
+        fontWeight = FontWeight.W800,
+        brush = Brush.linearGradient(
+            colors = TitleGradient
+        )
+    )
+    val SymbolTitle = TextStyle(
+        fontSize = 24.sp,
+        fontWeight = FontWeight.W600,
+        brush = Brush.linearGradient(
+            colors = SymbolGradient
+        )
+    )
+    val PriceTitle = TextStyle(
+        fontSize = 18.sp,
+        fontWeight = FontWeight.W400,
+        color = PurpleGrey40
+    )
+    val PriceValue = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.W200,
+        color = Grey
+    )
+}
+
+// TODO: Standard paddings and margins should be defined for Composables
+
+// TODO: I'm not going to expand on this for the assignment.
+//  Light/dark mode is beyond scope of this project.
 @Composable
 fun TastyTradeWatchlistsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

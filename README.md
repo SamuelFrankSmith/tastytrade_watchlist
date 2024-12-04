@@ -22,3 +22,4 @@
 - Address any warnings I may have missed.
 - Some region organization needs to be polished.
 - Finally, I wish I had time to finish the assignment.
+- More thought-out and universal handling of null/empty values for the models driving the views. Ultimately, I just have a null coalescing operator in the views themselves, but I'd rather better understand the contract with the API and Product team on how such things should be handled. I could then make a more informed decision on where/how to set default values and log anomalies appropriately. 

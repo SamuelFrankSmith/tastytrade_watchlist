@@ -3,6 +3,10 @@
     <string name="app_name">A Tasty Trade Watchlists</string>
     <!-- Generic -->
     <string name="error_generic">We have encountered an issue and were not able to fetch your data. We are sorry for the inconvenience and are investigating the issue.</string>
+    <string name="bid_price">Bid</string>
+    <string name="ask_price">Ask</string>
+    <string name="last_price">Last</string>
+    <string name="monetary_fallback">$--.--</string>
 
     <!-- Auth Strings -->
     <string name="auth_fragment_label">Authentication</string>
@@ -18,5 +22,8 @@
     <!-- Menu entries -->
     <string name="menu_action_logout">Logout</string>
     <string name="menu_action_refresh">Refresh</string>
+
+    <!-- Watchlist Details -->
+    <string name="watchlist_details_fragment_label">Watchlist Details</string>
 
 </resources>

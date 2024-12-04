@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 
 // region Actions and States
 sealed class AuthenticationAction {
+    data object ScreenDisplayed : AuthenticationAction()
     data class TappedLogIn(val username: String, val password: String) : AuthenticationAction()
 }
 
@@ -34,6 +35,14 @@ class AuthViewModel() : ViewModel(), ViewModelActions<AuthenticationAction> {
     @UiThread
     override fun perform(action: AuthenticationAction) {
         when (action) {
+            AuthenticationAction.ScreenDisplayed -> {
+                // TODO: If current session in UserManager is valid, then bypass login screen. Conversely use the remember-me token.
+                //  However, difficult to know is session is still valid. I didn't see anything documented in the open API specs.
+                //  I also tried GET against /sessions with Authorization header, but it was forbidden.
+                //  Cannot compare `session-expiration` against device time
+                //  since a user could override the device time.
+                /* Do nothing for now. See above note. */
+            }
             is TappedLogIn -> authenticate(action.username, action.password)
         }
     }

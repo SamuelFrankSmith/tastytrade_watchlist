@@ -22,6 +22,9 @@ open class TTFragment : Fragment() {
      *
      * This below solution is somewhat encouraged by Google
      * https://developer.android.com/topic/architecture/ui-layer/events
+     *
+     * For additional clarity, the usage of an Event wrapper is also discouraged
+     * https://medium.com/androiddevelopers/livedata-with-snackbar-navigation-and-other-events-the-singleliveevent-case-ac2622673150
      */
     protected var shouldHandleState: Boolean = true
 
