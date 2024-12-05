@@ -36,11 +36,14 @@ class AuthViewModel() : ViewModel(), ViewModelActions<AuthenticationAction> {
     override fun perform(action: AuthenticationAction) {
         when (action) {
             AuthenticationAction.ScreenDisplayed -> {
-                // TODO: If current session in UserManager is valid, then bypass login screen. Conversely use the remember-me token.
-                //  However, difficult to know is session is still valid. I didn't see anything documented in the open API specs.
+                // TODO: If current session in UserManager is valid, then bypass login screen.
+                //  Related: Make use the remember-me token.
+                //  However, it is difficult to know is session is still valid. I didn't see
+                //  anything documented in the open API specs.
                 //  I also tried GET against /sessions with Authorization header, but it was forbidden.
-                //  Cannot compare `session-expiration` against device time
-                //  since a user could override the device time.
+                //  We cannot confidently compare `session-expiration` against device time
+                //  since a user could override the device time. We could perhaps use a time service,
+                //  but that would not cover edge cases where the session was invalidated elsewhere.
                 /* Do nothing for now. See above note. */
             }
             is TappedLogIn -> authenticate(action.username, action.password)
@@ -52,7 +55,7 @@ class AuthViewModel() : ViewModel(), ViewModelActions<AuthenticationAction> {
 
     private val repository = AuthRepository()
 
-    // TODO: Time-permitting, I would like to write a StringLoader for viewModels to load strings from Resources
+    // TODO: I would have liked to write a StringLoader for viewModels to load strings from Resources
     private val userFriendlyErrorString = "Authentication failed for an unknown reason. Please try again."
 
     private fun authenticate(username: String, password: String) {

@@ -17,7 +17,8 @@ data class SymbolMarketPriceModel(
     val askPrice: String? = null,
     @SerializedName("last")
     val lastPrice: String? = null,
-    // TODO: In the future, `instrument` should be an enum of instruments, not a String
+    // TODO: In the future, `instrument` should likely be an enum of instruments, not a String.
+    //  This will help us avoid unnecessary string comparisons for any needed logic.
     @SerializedName("instrument-type")
     val instrument: String? = null,
 )

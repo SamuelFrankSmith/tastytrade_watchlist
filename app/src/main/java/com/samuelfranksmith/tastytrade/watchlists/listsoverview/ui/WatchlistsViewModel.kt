@@ -55,9 +55,14 @@ class WatchlistsViewModel() : ViewModel(), ViewModelActions<WatchlistsAction> {
     private fun createWatchlistOnUser() {
         watchlistsState.postValue(WatchlistsState.Loading)
 
-        // TODO: The rest of this flow. It's more complicated since a watchlist cannot be created with only a name field.
-        // TODO: More notes: 'code: record_not_uniq' is an internal code for what is essentially a duplicated key. I can assume the "name" field is generating this. I'll need to handle this on the UI.
-        // TODO: I'll need to create an enumeration of these error codes. I think I can assume they're fairly standard across the API, but there are no specifics on https://developer.tastytrade.com/api-overview/#error-codes
+        // TODO: The rest of this flow. It's more complicated since a watchlist cannot be created
+        //  with only a name field. This is part of 4c. It's a lot of CRUD work...
+        // TODO: More notes: 'code: record_not_uniq' is an internal code for what is essentially a
+        //  duplicated key. Appears that the "name" field is generating this.
+        //  I'll need to handle this on the UI.
+        // TODO: I'll need to create an enumeration of these error codes.
+        //  I think I can assume they're fairly standard across the API,
+        //  but there are no specifics on https://developer.tastytrade.com/api-overview/#error-codes
     }
 
     private fun fetchUserWatchlists() {

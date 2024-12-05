@@ -27,8 +27,10 @@ import com.samuelfranksmith.tastytrade.watchlists.util.visible
 
 /**
  * [WatchlistsFragment] will display the User's watchlists.
- * [TODO] Tapping on a watchlist will display more details regarding that watchlist
- * [TODO] Tapping the Fab will start a new flow in which a user constructs a new watchlist.
+ * TODO: Tapping the Fab will start a new flow in which a user constructs a new watchlist.
+ *   Part of that would require the type-ahead symbol lookup and CRUD operations
+ * TODO: The challenge seemingly wants this page to also display symbol prices, maybe?.
+ *   Not positive what that would be demonstrating skills-wise.
  */
 class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<WatchlistsState> {
 
@@ -96,7 +98,7 @@ class WatchlistsFragment : TTFragment(), MenuProvider, FragmentVMStates<Watchlis
         binding.watchlistsFab.setOnClickListener {
             // TODO: This is temporary, and woefully under-architected for the needs of adding
             //  a new watchlist after investigating the API.
-            //  See notes in the [WatchlistsViewModel].
+            //  See notes in the [WatchlistsViewModel.createWatchlistOnUser()].
             Toast.makeText(activity, "TODO: This is not implemented", Toast.LENGTH_LONG).show()
             watchlistsViewModel.perform(WatchlistsAction.AddNewWatchlist("some object"))
         }

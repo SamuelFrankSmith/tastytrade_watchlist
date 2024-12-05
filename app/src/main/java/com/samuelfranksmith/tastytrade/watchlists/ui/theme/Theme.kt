@@ -64,31 +64,3 @@ object TTTextStyle {
         color = Grey
     )
 }
-
-// TODO: Standard paddings and margins should be defined for Composables
-
-// TODO: I'm not going to expand on this for the assignment.
-//  Light/dark mode is beyond scope of this project.
-@Composable
-fun TastyTradeWatchlistsTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
-) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
-}

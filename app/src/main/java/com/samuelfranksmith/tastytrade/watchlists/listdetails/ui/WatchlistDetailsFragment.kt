@@ -26,7 +26,7 @@ import kotlin.getValue
 /**
  * Note: this class was originally setup to use Compose, but in the process I realized that
  * I am not intuitively experienced in managing complex states for Compose.
- * I'm leaving the Composables as an example/exercise for myself later.
+ * I'm leaving the Composables as a personal example/exercise for myself later.
  */
 class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<WatchlistDetailsState> {
 
@@ -41,8 +41,8 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
     override fun handle(state: WatchlistDetailsState) {
         when (state) {
             is DisplayWatchlistDetails -> displayWatchlistDetails(state.watchlist)
-            WatchlistDetailsState.EncounteredError -> { /* TODO: Whatever this is */ }
-            WatchlistDetailsState.Loading -> { /* TODO: Whatever this is. */ }
+            WatchlistDetailsState.EncounteredError -> { /* TODO: Implementation */ }
+            WatchlistDetailsState.Loading -> { /* TODO: Implementation */ }
         }
     }
 
@@ -140,15 +140,14 @@ class WatchlistDetailsFragment : TTFragment(), MenuProvider, FragmentVMStates<Wa
      *
      * I will however explain what I would do differently (as this is quicker)
      * 1. Add another State which only posts a specific Symbol data
-     * 2. Add a mutable, but private, list of entries to the Adapter (helpful in management)
-     * 3. A similar function to this one would exist, but only take Symbol data
+     * 2. Add a mutable, but private, list of entries to the Adapter (helpful in row management)
+     * 3. A similar function to this one below would exist, but only take Symbol data
      * 4. The Adapter would have a function to take this new Symbol data.
      * 5. The Adapter would locate the existing entry and compare new data, and only update that row
-     *    and the appropriate fields of that row (see step 4)
-     * 6. The ViewModel would have another function that does not await for all of the deferred calls
-     * 7. I *think* that covers all of the things I would like to do, but for real this "challenge"
-     * is excessively long and we would both be better served by a System Design interview
-     * especially for an EM role.
+     *    and the appropriate fields of that row (see step 2 & 4)
+     * 6. The ViewModel would have another function that does not await for all of the Deferred calls
+     *
+     * On first pass, I *think* that covers all of the things I would need to do.
      */
     @SuppressLint("NotifyDataSetChanged")
     private fun  displayWatchlistDetails(details: WatchlistModel) {
